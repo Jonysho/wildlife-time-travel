@@ -33,21 +33,20 @@ def detect_objects_in_image(image_path):
     
     # Perform object detection
     response = client.object_localization(image=image)
-    print(response)
     objects = response.localized_object_annotations
-
-    label_response = client.label_detection(image=image)
-    print(label_response)
-    labels = label_response.label_annotations
 
     # Extract and print the names and bounding boxes of detected objects
     print('Detected animal objects:')
+    relevant_objects = []
     for obj in objects:
         if is_category(obj.name):
-            print(f"Name: {obj.name}, Score: {obj.score}")
-            print('Bounding box:')
-            for vertex in obj.bounding_poly.normalized_vertices:
-                print(f" - ({vertex.x}, {vertex.y})")
+            obj_dict = {
+            'name': obj.name,
+            'bounding_box': [(vertex.x, vertex.y) for vertex in obj.bounding_poly.normalized_vertices]
+            }
+            relevant_objects.append(obj_dict)
+    # print(relevant_objects)
+    return relevant_objects
 
 # Example usage
-detect_objects_in_image('images/flower.jpg')
+# detect_objects_in_image('images/bird.jpeg')
