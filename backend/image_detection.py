@@ -8,7 +8,7 @@ from nltk.corpus import wordnet
 nltk.download('wordnet')
 
 # Set up the path to your service account key JSON file
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'google_vision.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'backend/google_vision.json'
 
 # Initialize the Vision API client
 client = vision.ImageAnnotatorClient()
