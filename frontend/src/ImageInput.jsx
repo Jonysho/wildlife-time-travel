@@ -23,17 +23,18 @@ const ImageInput = ({ testData }) => {
                 const container = containerRef.current;
                 container.innerHTML = ''; // Clear previous bounding boxes
                 const data = testData;
+                console.log(data);
                 data.forEach(item => {
                     const boundingBox = item.bounding_box;
                     const rect = document.createElement('div');
                     rect.style.position = 'absolute';
                     rect.style.border = '2px solid red';
-                    rect.style.left = `${boundingBox[0][0] * imgElement.width}px`;
+                    rect.style.left = `${boundingBox[0] * imgElement.width}px`;
                     rect.style.top = `${boundingBox[0][1] * imgElement.height}px`;
                     rect.style.width = `${(boundingBox[2][0] - boundingBox[0][0]) * imgElement.width}px`;
                     rect.style.height = `${(boundingBox[2][1] - boundingBox[0][1]) * imgElement.height}px`;
+                    console.log(imgElement.width, imgElement.height, boundingBox, rect.style.left, rect.style.top, rect.style.width, rect.style.height);
                     container.appendChild(rect);
-                    console.log(rect.style.left, rect.style.top, rect.style.width, rect.style.height);
                 });
             };
             imgElement.src = image; // Ensure the image is loaded
