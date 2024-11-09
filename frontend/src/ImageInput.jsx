@@ -20,7 +20,28 @@ const ImageInput = () => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    // reader
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        document.body.appendChild(img);
+                        console.log(e.target.result);
+                        fetch('/api/analyze-image', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ image: e.target.result, api }),
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Success:', data);
+                                // Handle the response data here
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                    };
+                    reader.readAsDataURL(file);
                 }
                 console.log(e.target.result);
                 if (e.target.files.length > 1) {
