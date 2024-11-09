@@ -1,59 +1,63 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 
-const ApiInput = ({ name, apiState: [api, setApi] }) => {
-    return <>
-        <input type="radio" name="api" id={`api-input${name}`} value={name} checked={api == name} onChange={() => {
-            setApi(name);
-        }} /><label htmlFor={`api-input-${name}`}>{name}</label>
-    </>
-}
+const ImageInput = ({ testData }) => {
+    const [file, setFile] = useState(null);
+    const [image, setImage] = useState(null);
+    const imgRef = useRef(null);
+    const containerRef = useRef(null);
 
-const ImageInput = () => {
-    const [api, setApi] = useState("google-vision");
-    const [file, setFile] = useState();
     useEffect(() => {
-        console.log(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImage(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
     }, [file]);
+
+    useEffect(() => {
+        if (image && imgRef.current) {
+            const imgElement = imgRef.current;
+            imgElement.onload = () => {
+                const container = containerRef.current;
+                container.innerHTML = ''; // Clear previous bounding boxes
+                const data = testData;
+                data.forEach(item => {
+                    const boundingBox = item.bounding_box;
+                    const rect = document.createElement('div');
+                    rect.style.position = 'absolute';
+                    rect.style.border = '2px solid red';
+                    rect.style.left = `${boundingBox[0][0] * imgElement.width}px`;
+                    rect.style.top = `${boundingBox[0][1] * imgElement.height}px`;
+                    rect.style.width = `${(boundingBox[2][0] - boundingBox[0][0]) * imgElement.width}px`;
+                    rect.style.height = `${(boundingBox[2][1] - boundingBox[0][1]) * imgElement.height}px`;
+                    container.appendChild(rect);
+                    console.log(rect.style.left, rect.style.top, rect.style.width, rect.style.height);
+                });
+            };
+            imgElement.src = image; // Ensure the image is loaded
+        }
+        
+    }, [image, testData]);
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
     return (
         <div>
-            <input type="file" name="image" id="image-input" onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        document.body.appendChild(img);
-                        console.log(e.target.result);
-                        fetch('/api/analyze-image', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ image: e.target.result, api }),
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Success:', data);
-                                // Handle the response data here
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
-                    };
-                    reader.readAsDataURL(file);
-                }
-                console.log(e.target.result);
-                if (e.target.files.length > 1) {
-                    // assert("you can only upload one image");
-                }
-                setFile(e.target.files[0]);
-            }}/><br />
-            <ApiInput name="google-vision" apiState={[api, setApi]} /><br />
-            <ApiInput name="plantnet" apiState={[api, setApi]} /><br />
-            <ApiInput name="plant-id" apiState={[api, setApi]} /><br />
+            <h2>Upload an Image</h2>
+            <label>
+                <input type="file" onChange={handleFileChange} />
+                <span>Click to select an image</span>
+            </label>
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+                {image && <img ref={imgRef} src={image} alt="Uploaded" style={{ maxWidth: '300px' }} />}
+                <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}></div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default ImageInput
+export default ImageInput;
