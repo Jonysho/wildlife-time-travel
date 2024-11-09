@@ -12,6 +12,7 @@ const ImageInput = () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
+                console.log("File loaded");
                 setImage(e.target.result);
             };
             reader.readAsDataURL(file);
@@ -30,6 +31,7 @@ const ImageInput = () => {
                 }),
             }).then(response => {
                 if (!response.ok) {
+                    console.error(response)
                     console.error("Network response was not ok " + response.statusText);
                 }
                 return response.json();

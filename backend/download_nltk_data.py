@@ -1,7 +1,6 @@
 # download_nltk_data.py
 import nltk
 import ssl
-import certifi
 
 def download_synonyms():
     # Configure SSL to use the certifi certificates

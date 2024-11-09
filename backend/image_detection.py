@@ -35,6 +35,7 @@ def detect_objects_in_image_file(image_path):
 
 def detect_objects_in_image_base64(image_base64):
     # Construct the image request
+    image_base64 = image_base64.split(",")[1]
     image = vision.Image(content=image_base64)
 
     return detect_objects_in_image(image)
