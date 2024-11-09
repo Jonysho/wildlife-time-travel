@@ -23,14 +23,23 @@ def is_category(name):
                 return True
     return False
 
-def detect_objects_in_image(image_path):
+def detect_objects_in_image_file(image_path):
     # Read the image file
     with io.open(image_path, 'rb') as image_file:
         content = image_file.read()
     
     # Construct the image request
     image = vision.Image(content=content)
-    
+
+    return detect_objects_in_image(image)
+
+def detect_objects_in_image_base64(image_base64):
+    # Construct the image request
+    image = vision.Image(content=image_base64)
+
+    return detect_objects_in_image(image)
+
+def detect_objects_in_image(image):
     # Perform object detection
     response = client.object_localization(image=image)
     objects = response.localized_object_annotations
