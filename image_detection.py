@@ -14,11 +14,13 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'google_vision.json'
 client = vision.ImageAnnotatorClient()
 
 # Define a function to check if a name is an animal
-def is_animal(name):
+def is_category(name):
     synsets = wordnet.synsets(name)
+    words_to_check = ['animal', 'species', 'plant', 'tree', 'insect']
     for synset in synsets:
-        if 'animal' in synset.lexname():
-            return True
+        for word in words_to_check:
+            if word in synset.definition():
+                return True
     return False
 
 def detect_objects_in_image(image_path):
@@ -41,11 +43,11 @@ def detect_objects_in_image(image_path):
     # Extract and print the names and bounding boxes of detected objects
     print('Detected animal objects:')
     for obj in objects:
-        if is_animal(obj.name):
+        if is_category(obj.name):
             print(f"Name: {obj.name}, Score: {obj.score}")
             print('Bounding box:')
             for vertex in obj.bounding_poly.normalized_vertices:
                 print(f" - ({vertex.x}, {vertex.y})")
 
 # Example usage
-detect_objects_in_image('images/lion.jpeg')
+detect_objects_in_image('images/flower.jpg')
