@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from image_detection import detect_objects_in_image_base64
 from gbif import get_species
+import download_nltk_data
 
 app = Flask(__name__)
+download_nltk_data()
 
 # API endpoint for GET and POST requests
 @app.route("/analyse-image", methods=["POST"])
