@@ -2,6 +2,7 @@ import json
 import openai
 import requests
 
+
 def load_api_key():
     with open('backend/api.json') as f:
         api_key = json.load(f)['openai_api_key']
@@ -55,7 +56,21 @@ def answer_prompt(prompt, context):
     context_string = ", ".join([f"{key}: {value}" for key, value in updated_context.items()])
     # print(context_string)
     
-    full_prompt = f"Context:\n{context_string}\n\nQuestion:\n{prompt}"
+    full_prompt = f"""
+    You are an expert in the field of biology with access to comprehensive databases and resources. 
+    Using the detailed context provided below, answer the following question with the most accurate 
+    and relevant information available.
+
+    Context:
+    {context_string}
+
+    Question:
+    {prompt}
+
+    Please provide a thorough and precise answer, including any relevant details or explanations that 
+    would help in understanding the topic better. If no word count is prompted in the question, keep
+    it to a maximum of 100 words.
+    """
 
     completion = client.chat.completions.create(
         model="gpt-4o",

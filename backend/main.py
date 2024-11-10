@@ -28,7 +28,9 @@ def analyse_image():
         if o["bounding_box"][0] not in seen_boxes:
             if o["name"] not in seen_objects:
                 o["species"] = get_species(o["key"])
-                o["desc"] = answer_prompt(("Give me a description in 30 words max, understandable by people of all ages, for the object: "+o["name"]), o["species"])
+                prompt = """You are an expert in the field of biology with access to comprehensive databases 
+                and resources. Give me a description in 30 words max, understandable by people of all ages, for the object: """
+                o["desc"] = answer_prompt((prompt+o["name"]), o["species"])
                 seen_objects[o["name"]] = o
             else:
                 species, desc = seen_objects[o["name"]]["species"], seen_objects[o["name"]]["desc"]

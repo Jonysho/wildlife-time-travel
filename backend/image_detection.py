@@ -36,7 +36,6 @@ def detect_objects_in_image(image):
         try:
             prompt = "For each of these object names, if it is a type of animal, plant, mushroom, insect or species, I want you to find the highest GBIF taxOnKey that matches the object from the GBIF website and dataset (if there is none, forget it). Add the name of the object followed the highest GBIF taxonKey relative to the object in this format: <name>:<id>, <name2>:<id2>... with nothing else. Here are the list of names: " + ", ".join(obj_names)
             response = get_matched_names(prompt=prompt)
-            # print(response)
             matched_names = {}
             for obj in response.split(","):
                 name, key = obj.split(":")
