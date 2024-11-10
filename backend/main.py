@@ -1,10 +1,8 @@
 from flask import Flask, request, jsonify
 from image_detection import detect_objects_in_image_base64
 from gbif import get_species
-# from download_nltk_data import download_synonyms
 
 app = Flask(__name__)
-# download_synonyms()
 
 @app.route("/api/test")
 def test():

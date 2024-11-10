@@ -1,11 +1,7 @@
 from google.cloud import vision
 import io
 import os
-import nltk
-from nltk.corpus import wordnet
-
-# Download the wordnet data
-nltk.download('wordnet')
+from open_ai import generate_completion
 
 # Set up the path to your service account key JSON file
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'backend/google_vision.json'
@@ -15,12 +11,11 @@ client = vision.ImageAnnotatorClient()
 
 # Define a function to check if a name is an animal
 def is_category(name):
-    synsets = wordnet.synsets(name)
-    words_to_check = ['animal', 'species', 'plant', 'tree', 'insect']
-    for synset in synsets:
-        for word in words_to_check:
-            if word in synset.definition():
-                return True
+    x = generate_completion(prompt="Is " + name + " an animal, a plant, a tree or an insect? Give me a 'Yes' or 'No'")
+    if "yes" in x.lower():
+        print(name + " is True")
+        return True
+    print(name + " is False")
     return False
 
 def detect_objects_in_image_file(image_path):
