@@ -10,14 +10,6 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'backend/google_vision.json'
 # Initialize the Vision API client
 client = vision.ImageAnnotatorClient()
 
-# Define a function to check if a name is an animal
-def is_category(name):
-    if "yes" in x.lower():
-        print(name + " is True")
-        return True
-    print(name + " is False")
-    return False
-
 def detect_objects_in_image_file(image_path):
     # Read the image file
     with io.open(image_path, 'rb') as image_file:
