@@ -11,6 +11,7 @@ def test():
 @app.route("/api/analyse-image", methods=["POST"])
 def analyse_image():
     data = request.get_json()
+    print(data)
     print("Received POST data")
 
     if not data or "image" not in data:

@@ -43,6 +43,7 @@ def detect_objects_in_image(image):
     prompt = "For each of these object names, if it is a type of animal, plant, mushroom, insect or species AND there exists a GBIF taxOnKey, add the name of the object followed the id in this format: <name>:<id>, <name2>:<id2>... with nothing else. Here are the list of names: " + ", ".join(obj_names)
     response = generate_completion(prompt=prompt)
     matched_names = {}
+    print(response)
     for obj in response.split(","):
         name, key = obj.split(":")
         matched_names[name.strip().lower()] = key.strip()
