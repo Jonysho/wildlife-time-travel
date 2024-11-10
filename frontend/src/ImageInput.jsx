@@ -63,13 +63,12 @@ const ImageInput = ({data, setData}) => {
                 .finally(() => {
                     console.log("Request completed.");
                 });
+            setData({});
         }
-
     }, [image]);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
-        setData({});
     };
 
     return (
