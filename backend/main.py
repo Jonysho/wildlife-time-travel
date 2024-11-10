@@ -18,13 +18,29 @@ def analyse_image():
         return jsonify({'error": "missing "image" in data'}), 400
 
     objects = detect_objects_in_image_base64(data["image"])
+
+    objects.sort(key=lambda x: x["key"], reverse=True)
     # object = ["name": cat, "key": 1, "bounding_box": [(0.1, 0.1), (0.2, 0.2)]]
+    seen_boxes=set()
+    return_objects = []
+    seen_objects = {}
     for o in objects:
-        o["species"] = get_species(o["key"])
-        o["desc"] = answer_prompt(("Give me a description in 30 words max, understandable by people of all ages, for the object: "+o["name"]), o["species"])
-        print(o["desc"])
+        if o["bounding_box"][0] not in seen_boxes:
+            print(o)
+            if o["name"] not in seen_objects:
+                o["species"] = get_species(o["key"])
+                o["desc"] = answer_prompt(("Give me a description in 30 words max, understandable by people of all ages, for the object: "+o["name"]), o["species"])
+                seen_objects[o["name"]] = o
+            else:
+                species, desc = seen_objects[o["name"]]["species"], seen_objects[o["name"]]["desc"]
+                o["species"] = species
+                o["desc"] = desc
+                print("cache")
+            return_objects.append(o)
+            seen_boxes.add(o["bounding_box"][0])
+    
     response = {
-        "objects": objects,
+        "objects": return_objects,
     }
     return jsonify(response), 200
 
