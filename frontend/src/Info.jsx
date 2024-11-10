@@ -9,7 +9,7 @@ const Info = ({ data, currentObjectIndex }) => {
         <div className='vbox'>
             <h2>Animal/Plant Information</h2>
             <div>
-                {currentObjectIndex != undefined ? <>
+                {currentObjectIndex != undefined && data?.objects && data.objects.length > 0 ? <>
                     {/* <p>Object Number: {currentObjectIndex}</p> */}
                     <p style={{ fontSize: '20px', fontWeight: '600', textAlign: 'center' }}>
                         Identified as: {data.objects[currentObjectIndex].name}
@@ -21,7 +21,7 @@ const Info = ({ data, currentObjectIndex }) => {
                     <p>Family: {data.objects[currentObjectIndex].species.family}</p>
                     <p>Genus: {data.objects[currentObjectIndex].species.genus}</p>
                     <p>Species: {data.objects[currentObjectIndex].species.species}</p>
-                </> : <p>Please click on one of the objects</p>}
+                </> : data?.objects && data.objects.length > 0 ? <p> Please click on one of the objects</p> : <p> No objects detected</p>}
             </div>
         </div>
     );

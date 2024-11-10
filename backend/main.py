@@ -21,7 +21,7 @@ def analyse_image():
     # object = ["name": cat, "key": 1, "bounding_box": [(0.1, 0.1), (0.2, 0.2)]]
     for o in objects:
         o["species"] = get_species(o["key"])
-        o["desc"] = answer_prompt(("Give me a description in 30 words max for the object: "+o["name"]), o["species"])
+        o["desc"] = answer_prompt(("Give me a description in 30 words max, understandable by people of all ages, for the object: "+o["name"]), o["species"])
         print(o["desc"])
     response = {
         "objects": objects,

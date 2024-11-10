@@ -32,21 +32,26 @@ def detect_objects_in_image(image):
     print('Detected animal objects:')
     relevant_objects = []
     obj_names = [obj.name for obj in objects]
-    prompt = "For each of these object names, if it is a type of animal, plant, mushroom, insect or species AND there exists a GBIF taxOnKey, add the name of the object followed the id in this format: <name>:<id>, <name2>:<id2>... with nothing else. Here are the list of names: " + ", ".join(obj_names)
-    response = get_matched_names(prompt=prompt)
-    matched_names = {}
-    print(response)
-    for obj in response.split(","):
-        name, key = obj.split(":")
-        matched_names[name.strip().lower()] = key.strip()
-    for obj in objects:
-        if obj.name.lower() in matched_names:
-            obj_dict = {
-            'name': obj.name,
-            'key': matched_names[obj.name.lower()],
-            'bounding_box': [(vertex.x, vertex.y) for vertex in obj.bounding_poly.normalized_vertices]
-            }
-            relevant_objects.append(obj_dict)
+    if obj_names:
+        try:
+            prompt = "For each of these object names, if it is a type of animal, plant, mushroom, insect or species AND there exists a GBIF taxOnKey, add the name of the object followed the id in this format: <name>:<id>, <name2>:<id2>... with nothing else. Here are the list of names: " + ", ".join(obj_names)
+            response = get_matched_names(prompt=prompt)
+            matched_names = {}
+            for obj in response.split(","):
+                name, key = obj.split(":")
+                matched_names[name.strip().lower()] = key.strip()
+            for obj in objects:
+                if obj.name.lower() in matched_names:
+                    obj_dict = {
+                    'name': obj.name,
+                    'key': matched_names[obj.name.lower()],
+                    'bounding_box': [(vertex.x, vertex.y) for vertex in obj.bounding_poly.normalized_vertices]
+                    }
+                    relevant_objects.append(obj_dict)
+            print(relevant_objects)
+        except Exception as e:
+            print(e)
+            return []
     # print(relevant_objects)
     return relevant_objects
 

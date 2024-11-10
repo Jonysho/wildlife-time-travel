@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
     const [data, setData] = useState({});
-    const [currentObjectIndex, setCurrentObjectIndex] = useState();
+    const [currentObjectIndex, setCurrentObjectIndex] = useState(0);
     useEffect(() => {
         // console.log(JSON.stringify(data));
         console.log(data);
