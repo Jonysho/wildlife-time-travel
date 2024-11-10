@@ -18,7 +18,7 @@ function App() {
             <ImageInput data={data} setData={setData} currentObjectIndex={currentObjectIndex} setCurrentObjectIndex={setCurrentObjectIndex}/>
             <Info data={data} currentObjectIndex={currentObjectIndex}/>
             </div>
-            <Map data={data}/>
+            <Map data={data} currentObjectIndex={currentObjectIndex}/>
         </div>
     );
 }

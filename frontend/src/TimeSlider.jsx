@@ -1,10 +1,10 @@
 // TimeSlider
 const TimeSlider = ({ year, setYear }) => {
     return (
-        <div style={{display: "flex", flex:"1 1 auto", width: "100%", flexDirection: "row"}}>
-            <input style={{ width: "100%", flex: "1 1 auto" }} onChange={(e) => {
+        <div style={{display: "flex", backgroundColor: "hsl(193, 100%, 60%)", flex:"0 1 auto", flexDirection: "row", padding: "1.5rem", margin: "1rem", borderRadius: "0.5rem"}}>
+            <input style={{ flex: "1 1 auto" }} onChange={(e) => {
                 setYear(e.target.value);
-            }} type="range" min="1500" max="2023" value={year} />{year}</div>
+            }} type="range" min="1800" max="2023" step="10" value={year} /><span style={{ flex: "0 1 auto", marginLeft: "1rem" }}>{year}</span></div>
     );
 };
 

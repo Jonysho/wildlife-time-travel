@@ -9,7 +9,7 @@ function getImageBase64(url) {
         console.log('Image fetched from sessionStorage');
         return Promise.resolve(cachedImage);
     }
-    return Promise.resolve(undefined);
+    // return Promise.resolve(undefined);
 
     // If the image is not cached, fetch it and cache it
     return fetch(url)
@@ -48,7 +48,7 @@ function getImageBase64(url) {
 }
 
 
-const Map = ({ data }) => {
+const Map = ({ data, currentObjectIndex }) => {
     // const [taxonKey, setTaxonKey] = useState();
     const [imageBase64, setImageBase64] = useState();
     const [year, setYear] = useState(2000);
@@ -72,18 +72,83 @@ const Map = ({ data }) => {
     }, [year]);
 
     return (
-        <div style={{ flex: "1 1 auto", width: "100%", display: "flex", flexDirection: "column" }}>
-            {/* <input type="checkbox" name="map-enabled" id="map-enabled input" /> */}
+        <div style={{
+            flex: "1 1 auto", 
+            width: "100%", 
+            display: "flex", 
+            flexDirection: "column", 
+            height: "100%"
+          }}>
             <div style={{
-                flex: "1 1 auto",
+              flex: "1 1 auto",
+              maxHeight: "100%",
+              overflow: "hidden",
+              border: "0.2rem solid hsl(193, 100%, 60%)",
+              borderRadius: "0.5rem",
+              backgroundColor: "hsl(193, 100%, 20%)",
+              margin: "1rem",
+              display: "flex",
+              justifyContent: "center", 
+              alignItems: "center",
+              position: "relative" // Make the parent container relative for absolute positioning inside
             }}>
-            {imageBase64 && <img src={imageBase64} alt="" style={{
-                objectFit: "contain",
-                maxHeight: "100%",
-                maxWidth: "100%",
-            }} />}</div>
+                <img 
+                  src="images/epsg3857.jpg" 
+                  alt="Main Image" 
+                  style={{
+                    objectFit: "contain", 
+                    maxHeight: "100%", 
+                    maxWidth: "100%"
+                  }} 
+                />
+              
+              {/* Overlay Image */}
+              {imageBase64 && (
+                <img 
+                  src={imageBase64} 
+                  alt="Overlay Image" 
+                  style={{
+                    position: "absolute", // Position the overlay image on top of the main image
+                    top: "0", 
+                    left: "0", 
+                    width: "100%", // Adjust the width and height as needed
+                    height: "100%", 
+                    objectFit: "contain", // Maintain aspect ratio
+                    pointerEvents: "none" // Ensure the overlay image doesn't block interactions with the underlying image
+                  }} 
+                />
+              )}
+            </div>
             <TimeSlider year={year} setYear={setYear} />
-        </div>
+
+          </div>
+          
+        // <div style={{ flex: "1 1 auto", width: "100%", display: "flex", flexDirection: "column", height: "100%" }}>
+        //     {/* <input type="checkbox" name="map-enabled" id="map-enabled input" /> */}
+        //     <div style={{
+        //         flex: "1 1 auto",
+        //         maxHeight: "100%",
+        //         overflow: "hidden",
+        //         border: "0.2rem solid hsl(193, 100%, 60%)",
+        //         borderRadius: "0.5rem",
+        //         backgroundColor: "hsl(193, 100%, 20%)",
+        //         margin: "1rem",
+        //         display: "flex",
+        //         justifyContent: "center", alignItems: "center",
+        //     }}>
+        //         {imageBase64 && <img src={imageBase64} alt="" style={{
+        //             objectFit: "contain",
+        //             maxHeight: "100%",
+        //             maxWidth: "100%",
+        //             // position: "absolute",
+        //             // top: "50%",
+        //             // left: "50%",
+        //             // transform: "translate(-50%, -50%)"
+
+        //             // maxHeight: "100px",
+        //         }} />}</div>
+        //     <TimeSlider year={year} setYear={setYear} />
+        // </div>
     )
 }
 
