@@ -21,5 +21,5 @@ def generate_completion(prompt):
     return completion.choices[0].message.content
 
 # Example usage
-prompt = "write a haiku about ai"
-print(generate_completion(prompt))
+# prompt = "write a haiku about ai"
+# print(generate_completion(prompt))

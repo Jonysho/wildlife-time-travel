@@ -17,6 +17,8 @@ def analyse_image():
         return jsonify({'error": "missing "image" in data'}), 400
 
     objects = detect_objects_in_image_base64(data["image"])
+    print(objects)
+    # object = ["name": cat, "key": 1, "bounding_box": [(0.1, 0.1), (0.2, 0.2)]]
     for o in objects:
         o["species"] = get_species(o["name"])
 
