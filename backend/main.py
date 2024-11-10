@@ -5,10 +5,6 @@ from agent import answer_prompt
 
 app = Flask(__name__)
 
-@app.route("/api/test")
-def test():
-    return "Hello, World!"
-
 @app.route("/api/analyse-image", methods=["POST"])
 def analyse_image():
     data = request.get_json()
@@ -44,6 +40,7 @@ def analyse_image():
     }
     return jsonify(response), 200
 
+@app.route("/api/agent", methods=["POST"])
 
 if __name__ == "__main__":
     app.run(host="localhost")
