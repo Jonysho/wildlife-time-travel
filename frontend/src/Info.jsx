@@ -14,13 +14,13 @@ const Info = ({ data, currentObjectIndex }) => {
                     <p style={{ fontSize: '20px', fontWeight: '600', textAlign: 'center' }}>
                         Identified as: {data.objects[currentObjectIndex].name}
                     </p>
-                    <p>Description: {data.objects[currentObjectIndex].desc}</p>
-                    <p>Kingdom: {data.objects[currentObjectIndex].species.kingdom}</p>
-                    <p>Phylum: {data.objects[currentObjectIndex].species.phylum}</p>
-                    <p>Order: {data.objects[currentObjectIndex].species.order}</p>
-                    <p>Family: {data.objects[currentObjectIndex].species.family}</p>
-                    <p>Genus: {data.objects[currentObjectIndex].species.genus}</p>
-                    <p>Species: {data.objects[currentObjectIndex].species.species}</p>
+                    <p>Description: {data.objects[currentObjectIndex].desc} </p>
+                    <p>Kingdom: {data.objects[currentObjectIndex].species.kingdom || "N/A"}</p>
+                    <p>Phylum: {data.objects[currentObjectIndex].species.phylum || "N/A"}</p>
+                    <p>Order: {data.objects[currentObjectIndex].species.order || "N/A"}</p>
+                    <p>Family: {data.objects[currentObjectIndex].species.family || "N/A"}</p>
+                    <p>Genus: {data.objects[currentObjectIndex].species.genus || "N/A"}</p>
+                    <p>Species: {data.objects[currentObjectIndex].species.species || "N/A"}</p>
                 </> : data?.objects && data.objects.length > 0 ? <p> Please click on one of the objects</p> : <p> No objects detected</p>}
             </div>
         </div>

@@ -26,7 +26,6 @@ def analyse_image():
     seen_objects = {}
     for o in objects:
         if o["bounding_box"][0] not in seen_boxes:
-            print(o)
             if o["name"] not in seen_objects:
                 o["species"] = get_species(o["key"])
                 o["desc"] = answer_prompt(("Give me a description in 30 words max, understandable by people of all ages, for the object: "+o["name"]), o["species"])
@@ -35,7 +34,6 @@ def analyse_image():
                 species, desc = seen_objects[o["name"]]["species"], seen_objects[o["name"]]["desc"]
                 o["species"] = species
                 o["desc"] = desc
-                print("cache")
             return_objects.append(o)
             seen_boxes.add(o["bounding_box"][0])
     
