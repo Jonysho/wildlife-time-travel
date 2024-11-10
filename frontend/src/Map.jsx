@@ -9,6 +9,7 @@ function getImageBase64(url) {
         console.log('Image fetched from sessionStorage');
         return Promise.resolve(cachedImage);
     }
+    return Promise.resolve(undefined);
 
     // If the image is not cached, fetch it and cache it
     return fetch(url)
