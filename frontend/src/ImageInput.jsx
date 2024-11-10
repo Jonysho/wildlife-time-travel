@@ -39,8 +39,8 @@ const ImageInput = ({ data, setData, currentObjectIndex, setCurrentObjectIndex }
     }, [file]);
 
     useEffect(() => {
-        setData(testData);
-        return;
+        // setData(testData);
+        // return;
         if (image) {
             fetch("/api/analyse-image", {
                 method: "POST",
