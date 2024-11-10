@@ -37,7 +37,7 @@ function App() {
     return (
         <div className="App" style={{ height: '100vh', width: '100vw', display: "flex", flexDirection: "row" }}>
             <div style={{flex: "1 1 auto", display: "flex", flexDirection: "column", width: "100%", maxWidth: "40rem"}}>
-            <ImageInput data={data} setData={setData} currentObjectIndex={currentObjectIndex} setCurrentObjectIndex={setCurrentObjectIndex} setLoading={setLoading}/>
+            <ImageInput data={data} setData={setData} currentObjectIndex={currentObjectIndex} setCurrentObjectIndex={setCurrentObjectIndex} loading={loading} setLoading={setLoading}/>
             <Info currentObject={currentObject} loading={loading}/>
             </div>
             <Map currentObject={currentObject}/>
