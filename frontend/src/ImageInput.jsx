@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 
-const ImageInput = () => {
+const ImageInput = ({data, setData}) => {
     // const testData = { objects: [{ 'name': 'Flower', 'bounding_box': [[0.0927734375, 0.166015625], [0.94140625, 0.166015625], [0.94140625, 0.65625], [0.0927734375, 0.65625]] }] };
 
     const [file, setFile] = useState(null);
     const [image, setImage] = useState(null);
-    const [data, setData] = useState({});
 
     useEffect(() => {
         // Load an image from a URL when the component mounts
@@ -49,7 +48,7 @@ const ImageInput = () => {
                 }),
             }).then(response => {
                 if (!response.ok) {
-                    console.error(response)
+                    // console.error(response)
                     console.error("Network response was not ok " + response.statusText);
                 }
                 return response.json();
@@ -74,7 +73,7 @@ const ImageInput = () => {
     };
 
     return (
-        <div>
+        <div style={{flex: "1 1 auto"}}>
             <h2>Upload an Image</h2>
             <label>
                 <input type="file" onChange={handleFileChange} />
