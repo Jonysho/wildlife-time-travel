@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: hsl(193, 100%, 95%);
 }
 
 code {
@@ -13,5 +14,21 @@ code {
 }
 
 * {
-  outline: 1px dashed black
+  /* outline: 1px dashed black; */
+  padding: 0;
+  margin: 0;
+}
+
+h2 {
+  flex: 0 1 auto;
+  margin-bottom: 1rem;
+}
+
+.vbox {
+  padding: 1.5rem;
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
