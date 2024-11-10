@@ -66,13 +66,13 @@ const Map = ({ data, currentObjectIndex }) => {
 
     useEffect(() => {
         const url = data?.objects && currentObjectIndex != undefined && data.objects.length > 0 ?
-            `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${year}&taxonKey=${data.objects}` :
+            `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${year-5},${year+5}&taxonKey=${data.objects[currentObjectIndex].key}` :
             `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${year}`;
         getImageBase64(url)
             .then(imageBase64 => {
                 setImageBase64(imageBase64);
             });
-    }, [year]);
+    }, [year, currentObjectIndex, data]);
 
     return (
         <div style={{
