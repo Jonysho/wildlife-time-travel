@@ -110,7 +110,7 @@ const Map = ({ currentObject }) => {
             flexDirection: "column",
             height: "100%"
         }}>
-            {hintText != undefined && <div style={{ margin: "1rem" }}>
+            {hintText != undefined && <div style={{ flex: "0 1 auto", height: "1rem", marginLeft: "1rem" }}>
                 {hintText}
             </div>}
             <div style={{

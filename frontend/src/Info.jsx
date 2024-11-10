@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Info
-const Info = ({ currentObject }) => {
+const Info = ({ currentObject, loading }) => {
     // const [name, setName] = useState(null);
     // const [description, setDescription] = useState('');
 
@@ -22,7 +22,7 @@ const Info = ({ currentObject }) => {
                     <p>Genus: {currentObject.species.genus || "N/A"}</p>
                     <p>Species: {currentObject.species.species || "N/A"}</p>
                 {/* </> : <p>Please click on one of the objects or upload a different image.</p>} */}
-                </> : <p>Loading...</p>}
+                </> : loading ? <p>Loading...</p>: <p>Please select an object or upload another image.</p>}
             </div>
         </div>
     );

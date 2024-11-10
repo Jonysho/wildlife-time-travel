@@ -27,6 +27,7 @@ function App() {
     const [data, setData] = useState({});
     const [currentObjectIndex, setCurrentObjectIndex] = useState(0);
     const [currentObject, setCurrentObject] = useState();
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         // console.log(JSON.stringify(data));
         // console.log(data);
@@ -35,8 +36,8 @@ function App() {
     return (
         <div className="App" style={{ height: '100vh', width: '100vw', display: "flex", flexDirection: "row" }}>
             <div style={{flex: "1 1 auto", display: "flex", flexDirection: "column", width: "100%", maxWidth: "40rem"}}>
-            <ImageInput data={data} setData={setData} currentObjectIndex={currentObjectIndex} setCurrentObjectIndex={setCurrentObjectIndex}/>
-            <Info currentObject={currentObject}/>
+            <ImageInput data={data} setData={setData} currentObjectIndex={currentObjectIndex} setCurrentObjectIndex={setCurrentObjectIndex} setLoading={setLoading}/>
+            <Info currentObject={currentObject} loading={loading}/>
             </div>
             <Map currentObject={currentObject}/>
         </div>
