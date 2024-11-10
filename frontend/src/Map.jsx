@@ -53,6 +53,7 @@ const Map = ({ currentObject }) => {
     const [imageBase64, setImageBase64] = useState();
     const [startYear, setStartYear] = useState(1950);
     const [endYear, setEndYear] = useState(2020);
+    const [hintText, setHintText] = useState(undefined);
 
     function setStartYearWrapper(y) {
         if (y < endYear) {
@@ -78,12 +79,26 @@ const Map = ({ currentObject }) => {
     // }, [data]);
 
     useEffect(() => {
+
+        console.log(currentObject);
+
+        // function hintText() {
+        if (currentObject == undefined) {
+            setHintText("Currently displaying map of all species records as no object is selected.");
+        } else {
+            setHintText("Loading...");
+        }
+
+        // }
         const url = currentObject != undefined ?
             `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${startYear},${endYear}&taxonKey=${currentObject.key}` :
             `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${startYear},${endYear}`;
         getImageBase64(url)
             .then(imageBase64 => {
                 setImageBase64(imageBase64);
+                if (currentObject != undefined) {
+                    setHintText(undefined);
+                }
             });
     }, [startYear, endYear, currentObject]);
 
@@ -95,8 +110,8 @@ const Map = ({ currentObject }) => {
             flexDirection: "column",
             height: "100%"
         }}>
-            {currentObject != undefined || <div style={{margin: "1rem"}}>
-                Currently displaying map of all species records as no object is selected.
+            {hintText != undefined && <div style={{ margin: "1rem" }}>
+                {hintText}
             </div>}
             <div style={{
                 flex: "1 1 auto",

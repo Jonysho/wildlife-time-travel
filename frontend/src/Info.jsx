@@ -21,7 +21,8 @@ const Info = ({ currentObject }) => {
                     <p>Family: {currentObject.species.family || "N/A"}</p>
                     <p>Genus: {currentObject.species.genus || "N/A"}</p>
                     <p>Species: {currentObject.species.species || "N/A"}</p>
-                </> : <p>Please click on one of the objects or upload a different image.</p>}
+                {/* </> : <p>Please click on one of the objects or upload a different image.</p>} */}
+                </> : <p>Loading...</p>}
             </div>
         </div>
     );
