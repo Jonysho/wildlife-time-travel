@@ -1,4 +1,4 @@
 openai
 google-cloud-vision
 requests
-flaskz
+flask
