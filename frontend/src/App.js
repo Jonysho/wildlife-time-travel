@@ -2,6 +2,7 @@ import './App.css';
 import Map from './Map';
 import ImageInput from './ImageInput';
 import Info from './Info';
+import Agent from './Agent';
 import { useEffect, useState } from 'react';
 
 function getCurrentObject(data, currentObjectIndex) {
@@ -40,6 +41,7 @@ function App() {
             <Info currentObject={currentObject} loading={loading}/>
             </div>
             <Map currentObject={currentObject}/>
+            <Agent currentObject={currentObject}/>
         </div>
     );
 }
