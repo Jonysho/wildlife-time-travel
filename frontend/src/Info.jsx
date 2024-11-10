@@ -9,7 +9,7 @@ const Info = ({ data, currentObjectIndex }) => {
         <div className='vbox'>
             <h2>Animal/Plant Information</h2>
             <div>
-                {currentObjectIndex != undefined ? <>
+                {(currentObjectIndex != undefined && data?.objects) ? <>
                     <p>Object Number: {currentObjectIndex}</p>
                     <p>Identified as: {data.objects[currentObjectIndex].name}</p>
                     <p>Kingdom: {data.objects[currentObjectIndex].species.kingdom}</p>
