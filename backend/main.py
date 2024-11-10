@@ -41,6 +41,16 @@ def analyse_image():
     return jsonify(response), 200
 
 @app.route("/api/agent", methods=["POST"])
+def agent():
+    data = request.get_json()
+    print("Received POST data")
+
+    if not data or "prompt" not in data or "context" not in data:
+        return jsonify({'error": "missing "prompt" or "context" in data'}), 400
+
+    response = answer_prompt(data["prompt"], data["context"])
+    return jsonify(response), 200
+
 
 if __name__ == "__main__":
     app.run(host="localhost")
