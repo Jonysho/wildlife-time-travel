@@ -11,7 +11,6 @@ client = vision.ImageAnnotatorClient()
 
 # Define a function to check if a name is an animal
 def is_category(name):
-    x = generate_completion(prompt="Is " + name + " an animal, a plant, a tree or an insect? Give me a 'Yes' or 'No'")
     if "yes" in x.lower():
         print(name + " is True")
         return True
@@ -22,17 +21,13 @@ def detect_objects_in_image_file(image_path):
     # Read the image file
     with io.open(image_path, 'rb') as image_file:
         content = image_file.read()
-    
-    # Construct the image request
     image = vision.Image(content=content)
-
     return detect_objects_in_image(image)
 
 def detect_objects_in_image_base64(image_base64):
     # Construct the image request
     image_base64 = image_base64.split(",")[1]
     image = vision.Image(content=image_base64)
-
     return detect_objects_in_image(image)
 
 def detect_objects_in_image(image):
@@ -43,8 +38,10 @@ def detect_objects_in_image(image):
     # Extract and print the names and bounding boxes of detected objects
     print('Detected animal objects:')
     relevant_objects = []
+    obj_names = [obj.name for obj in objects]
+    relevant_names = generate_completion(prompt="For each of these objects, if it is an animal, plant, mushroom, insect or a species, add it to a comma-seperated list and return it to me. Here are the list of names: " + ", ".join(obj_names))
     for obj in objects:
-        if is_category(obj.name):
+        if obj.name in relevant_names:
             obj_dict = {
             'name': obj.name,
             'bounding_box': [(vertex.x, vertex.y) for vertex in obj.bounding_poly.normalized_vertices]
