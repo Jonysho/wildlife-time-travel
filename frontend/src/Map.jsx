@@ -48,7 +48,7 @@ function getImageBase64(url) {
 }
 
 
-const Map = ({ data, currentObjectIndex }) => {
+const Map = ({ currentObject }) => {
     // const [taxonKey, setTaxonKey] = useState();
     const [imageBase64, setImageBase64] = useState();
     const [startYear, setStartYear] = useState(1950);
@@ -78,14 +78,14 @@ const Map = ({ data, currentObjectIndex }) => {
     // }, [data]);
 
     useEffect(() => {
-        const url = data?.objects && currentObjectIndex != undefined && data.objects.length > 0 ?
-            `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${startYear},${endYear}&taxonKey=${data.objects[currentObjectIndex].key}` :
+        const url = currentObject != undefined ?
+            `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${startYear},${endYear}&taxonKey=${currentObject.key}` :
             `https://api.gbif.org/v2/map/occurrence/density/0/0/0@4x.png?style=classic.point&year=${startYear},${endYear}`;
         getImageBase64(url)
             .then(imageBase64 => {
                 setImageBase64(imageBase64);
             });
-    }, [startYear, endYear, currentObjectIndex, data]);
+    }, [startYear, endYear, currentObject]);
 
     return (
         <div style={{
@@ -95,7 +95,7 @@ const Map = ({ data, currentObjectIndex }) => {
             flexDirection: "column",
             height: "100%"
         }}>
-            {data?.objects && currentObjectIndex != undefined && data.objects.length > 0 || <div style={{margin: "1rem"}}>
+            {currentObject != undefined || <div style={{margin: "1rem"}}>
                 Currently displaying map of all species records as no object is selected.
             </div>}
             <div style={{

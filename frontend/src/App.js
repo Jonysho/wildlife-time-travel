@@ -4,21 +4,41 @@ import ImageInput from './ImageInput';
 import Info from './Info';
 import { useEffect, useState } from 'react';
 
+function getCurrentObject(data, currentObjectIndex) {
+    if (data == undefined) {
+        return undefined;
+    }
+    if (currentObjectIndex == undefined) {
+        return undefined
+    }
+    if (data.objects == undefined) {
+        return undefined;
+    }
+    if (data.objects.length == undefined) {
+        return undefined;
+    }
+    if (currentObjectIndex >= data.objects.length) {
+        return undefined;
+    }
+    return data.objects[currentObjectIndex];
+}
 
 function App() {
     const [data, setData] = useState({});
     const [currentObjectIndex, setCurrentObjectIndex] = useState(0);
+    const [currentObject, setCurrentObject] = useState();
     useEffect(() => {
         // console.log(JSON.stringify(data));
-        console.log(data);
-    }, [data]);
+        // console.log(data);
+        setCurrentObject(getCurrentObject(data, currentObjectIndex));
+    }, [data, currentObjectIndex]);
     return (
         <div className="App" style={{ height: '100vh', width: '100vw', display: "flex", flexDirection: "row" }}>
             <div style={{flex: "1 1 auto", display: "flex", flexDirection: "column", width: "100%", maxWidth: "40rem"}}>
             <ImageInput data={data} setData={setData} currentObjectIndex={currentObjectIndex} setCurrentObjectIndex={setCurrentObjectIndex}/>
-            <Info data={data} currentObjectIndex={currentObjectIndex}/>
+            <Info currentObject={currentObject}/>
             </div>
-            <Map data={data} currentObjectIndex={currentObjectIndex}/>
+            <Map currentObject={currentObject}/>
         </div>
     );
 }
