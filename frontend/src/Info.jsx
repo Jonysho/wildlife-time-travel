@@ -10,8 +10,11 @@ const Info = ({ data, currentObjectIndex }) => {
             <h2>Animal/Plant Information</h2>
             <div>
                 {currentObjectIndex != undefined ? <>
-                    <p>Object Number: {currentObjectIndex}</p>
-                    <p>Identified as: {data.objects[currentObjectIndex].name}</p>
+                    {/* <p>Object Number: {currentObjectIndex}</p> */}
+                    <p style={{ fontSize: '20px', fontWeight: '600', textAlign: 'center' }}>
+                        Identified as: {data.objects[currentObjectIndex].name}
+                    </p>
+                    <p>Description: {data.objects[currentObjectIndex].desc}</p>
                     <p>Kingdom: {data.objects[currentObjectIndex].species.kingdom}</p>
                     <p>Phylum: {data.objects[currentObjectIndex].species.phylum}</p>
                     <p>Order: {data.objects[currentObjectIndex].species.order}</p>

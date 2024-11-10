@@ -2,7 +2,7 @@ from google.cloud import vision
 import io
 import os
 import json
-from open_ai import generate_completion
+from agent import get_matched_names
 
 # Set up the path to your service account key JSON file
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'backend/google_vision.json'
@@ -33,7 +33,7 @@ def detect_objects_in_image(image):
     relevant_objects = []
     obj_names = [obj.name for obj in objects]
     prompt = "For each of these object names, if it is a type of animal, plant, mushroom, insect or species AND there exists a GBIF taxOnKey, add the name of the object followed the id in this format: <name>:<id>, <name2>:<id2>... with nothing else. Here are the list of names: " + ", ".join(obj_names)
-    response = generate_completion(prompt=prompt)
+    response = get_matched_names(prompt=prompt)
     matched_names = {}
     print(response)
     for obj in response.split(","):
