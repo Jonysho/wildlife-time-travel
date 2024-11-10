@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from image_detection import detect_objects_in_image_base64
 from gbif import get_species
+from agent import answer_prompt
 
 app = Flask(__name__)
 
@@ -11,22 +12,20 @@ def test():
 @app.route("/api/analyse-image", methods=["POST"])
 def analyse_image():
     data = request.get_json()
-    print(data)
     print("Received POST data")
 
     if not data or "image" not in data:
         return jsonify({'error": "missing "image" in data'}), 400
 
     objects = detect_objects_in_image_base64(data["image"])
-    # print(objects)
     # object = ["name": cat, "key": 1, "bounding_box": [(0.1, 0.1), (0.2, 0.2)]]
     for o in objects:
         o["species"] = get_species(o["key"])
-
+        o["desc"] = answer_prompt(("Give me a description in 30 words max for the object: "+o["name"]), o["species"])
+        print(o["desc"])
     response = {
         "objects": objects,
     }
-    # print(response)
     return jsonify(response), 200
 
 
